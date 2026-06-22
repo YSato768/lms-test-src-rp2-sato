@@ -10,6 +10,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -30,9 +31,11 @@ public class WebDriverUtils {
 	 */
 	public static void createDriver() {
 		System.setProperty("webdriver.chrome.driver", "lib/chromedriver.exe");
-		webDriver = new ChromeDriver();
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--incognito");
+		webDriver = new ChromeDriver(options);
 	}
-	
+
 	/**
 	 * インスタンス終了
 	 */
@@ -48,7 +51,7 @@ public class WebDriverUtils {
 		webDriver.get(url);
 		pageLoadTimeout(5);
 	}
-	
+
 	/**
 	 * ページロードタイムアウト設定
 	 * @param second
@@ -56,7 +59,7 @@ public class WebDriverUtils {
 	public static void pageLoadTimeout(int second) {
 		webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(second));
 	}
-	
+
 	/**
 	 * 要素の可視性タイムアウト設定
 	 * @param locater
@@ -66,7 +69,7 @@ public class WebDriverUtils {
 		WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(second));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(locater));
 	}
-	
+
 	/**
 	 * 指定ピクセル分だけスクロール
 	 * @param pixel
@@ -75,7 +78,6 @@ public class WebDriverUtils {
 		((JavascriptExecutor) webDriver).executeScript("window.scrollBy(0," + pixel + ");");
 	}
 
-	
 	/**
 	 * 指定位置までスクロール
 	 * @param pixel
