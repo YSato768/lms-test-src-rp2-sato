@@ -69,6 +69,8 @@ public class Case15 {
 		WebElement submitElement = webDriver.findElement(By.className("btn-primary"));
 		submitElement.click();
 
+		assertEquals("セキュリティ規約 | LMS", webDriver.getTitle());
+
 		//ログインが成功したか確認
 		getEvidence(new Object() {
 		}, "checkLogin");
@@ -83,8 +85,6 @@ public class Case15 {
 
 		WebElement submitElement = webDriver.findElement(By.className("btn-primary"));
 		submitElement.click();
-
-		assertEquals("セキュリティ規約 | LMS", webDriver.getTitle());
 
 		scrollBy("1000");
 
