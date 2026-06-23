@@ -3,6 +3,8 @@ package jp.co.sss.lms.ct.util;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -32,8 +34,24 @@ public class WebDriverUtils {
 	public static void createDriver() {
 		System.setProperty("webdriver.chrome.driver", "lib/chromedriver.exe");
 		ChromeOptions options = new ChromeOptions();
-		options.addArguments("--incognito");
+
+		Map<String, Object> prefs = new HashMap<>();
+
+		// パスワードマネージャー自体を無効化（保存の確認を非表示）
+		//		prefs.put("credentials_enable_service", false);
+
+		// パスワードのデータ漏洩（リーク）チェック警告を非表示
+		prefs.put("profile.password_manager_leak_detection", false);
+
+		// 3. 作成した設定をChromeOptionsに適用
+		options.setExperimentalOption("prefs", prefs);
+		//		options.addArguments("--incognito");
 		webDriver = new ChromeDriver(options);
+
+		//		ChromeOptions options = new ChromeOptions();
+		//		options.addArguments("--incognito");
+		//		webDriver = new ChromeDriver(options);
+		//webDriver = new ChromeDriver();
 	}
 
 	/**
