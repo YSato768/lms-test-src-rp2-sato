@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -79,6 +80,9 @@ public class Case13 {
 
 		WebElement submitElement = webDriver.findElement(By.className("btn-primary"));
 		submitElement.click();
+
+		WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("h2")));
 
 		assertEquals("コース詳細 | LMS", webDriver.getTitle());
 
@@ -242,10 +246,17 @@ public class Case13 {
 
 		scrollBy("100");
 
-		WebElement scoreNumElement = webDriver.findElement(By.xpath(
-				"//*[@id=\"main\"]/div/table[2]/tbody/tr[2]/td[2]"));
+		List<WebElement> scoreNumElements = webDriver.findElements(By.xpath(
+				"//*[@id=\"main\"]/div/table[2]/tbody/tr"));
+		WebElement lastScoreElement = scoreNumElements.get(scoreNumElements.size() - 1);
+
+		Actions actions = new Actions(webDriver);
+		actions.scrollToElement(lastScoreElement).perform();
+		scrollBy("100");
+
 		assertEquals("試験【ITリテラシー①】 | LMS", webDriver.getTitle());
-		assertEquals("0.0点", scoreNumElement.getText());
+		assertEquals("0.0点", lastScoreElement.findElement(By.xpath(
+				".//td[2]")).getText());
 
 		//試験点数が表示されたか確認
 		getEvidence(new Object() {
