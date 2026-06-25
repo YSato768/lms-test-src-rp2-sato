@@ -156,7 +156,10 @@ public class Case14 {
 		WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("h2")));
 
+		WebElement radioBtnElement = webDriver.findElement(By.id("answer-0-0"));
+
 		assertEquals("ITリテラシー① | LMS", webDriver.getTitle());
+		assertTrue(radioBtnElement.isDisplayed());
 
 		//試験開始画面が表示されたか確認
 		getEvidence(new Object() {
