@@ -80,10 +80,11 @@ public class Case13 {
 		WebElement submitElement = webDriver.findElement(By.className("btn-primary"));
 		submitElement.click();
 
+		assertEquals("コース詳細 | LMS", webDriver.getTitle());
+
 		getEvidence(new Object() {
 		}, "checkCourseDetailPage");
 
-		assertEquals("コース詳細 | LMS", webDriver.getTitle());
 	}
 
 	@Test
